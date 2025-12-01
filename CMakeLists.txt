@@ -4,6 +4,8 @@ cmake_minimum_required(VERSION 3.14)
 # Project Name
 project(LatencyAwareOrderBookSim)
 
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
 find_package(Python3 COMPONENTS Interpreter Development REQUIRED)
 
 # C++ standard
