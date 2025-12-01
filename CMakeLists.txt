@@ -29,6 +29,18 @@ target_include_directories(OrderBookLib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/inclu
 # Include FetchContent module
 include(FetchContent)
 
+# Fetch pybind11
+FetchContent_Declare(
+    pybind11
+    GIT_REPOSITORY https://github.com/pybind/pybind11.git
+    GIT_TAG v2.12.1
+)
+FetchContent_MakeAvailable(pybind11)
+
+pybind11_add_module(orderbook_wrapper bindings/pybind.module.cpp)
+
+target_link_libraries(orderbook_wrapper PRIVATE OrderBookLib)
+
 # Tell CMake to download version 1.14.0 of GoogleTest
 FetchContent_Declare(
     googletest
