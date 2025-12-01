@@ -1,1 +1,1 @@
-# order-book-simulator
+# High Frequency Trading Strategy Simulator
