@@ -280,7 +280,7 @@ double Metrics::get_gross_profit() {
     return gross_profit;
 }
 
-double Metrics::get_cross_loss() {
+double Metrics::get_gross_loss() {
     return gross_loss;
 }
 

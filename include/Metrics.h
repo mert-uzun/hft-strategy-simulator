@@ -108,7 +108,7 @@ class Metrics {
         double get_volatility();
         double get_sharpe_ratio();
         double get_gross_profit();
-        double get_cross_loss();
+        double get_gross_loss();
         double get_profit_factor();
         double get_win_rate();
 };

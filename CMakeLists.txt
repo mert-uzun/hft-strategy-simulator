@@ -4,6 +4,8 @@ cmake_minimum_required(VERSION 3.14)
 # Project Name
 project(LatencyAwareOrderBookSim)
 
+find_package(Python3 COMPONENTS Interpreter Development REQUIRED)
+
 # C++ standard
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -37,7 +39,7 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(pybind11)
 
-pybind11_add_module(orderbook_wrapper bindings/pybind.module.cpp)
+pybind11_add_module(orderbook_wrapper bindings/pybind.bindings.cpp)
 
 target_link_libraries(orderbook_wrapper PRIVATE OrderBookLib)
 

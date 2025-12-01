@@ -1,3 +1,5 @@
+#pragma once
+
 #include "MarketEngine.h"
 #include "Strategy.h"
 
