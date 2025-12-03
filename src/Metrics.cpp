@@ -117,7 +117,7 @@ void Metrics::finalize(long long timestamp) {
 }
 
 void Metrics::on_order_placed(long long order_id, Side side, long long arrival_price_ticks, long long arrival_timestamp_us, int intended_quantity, bool is_instant) {
-    order_cache.try_emplace(order_id, side, arrival_price_ticks, arrival_timestamp_us, intended_quantity, intended_quantity, is_instant);
+    order_cache.emplace(order_id, side, arrival_price_ticks, arrival_timestamp_us, intended_quantity, intended_quantity, is_instant);
 
     if (!is_instant) {
         resting_attempted_qty += intended_quantity;
