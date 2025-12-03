@@ -7,6 +7,7 @@ project(LatencyAwareOrderBookSim)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 find_package(Python3 COMPONENTS Interpreter Development REQUIRED)
+find_package(pybind11 REQUIRED)
 
 # C++ standard
 set(CMAKE_CXX_STANDARD 17)
@@ -29,34 +30,12 @@ add_library(OrderBookLib ${SOURCES} ${HEADERS})
 # Tell the compiler where to look for header files
 target_include_directories(OrderBookLib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
 
-
-# Include FetchContent module
-include(FetchContent)
-
-# Fetch pybind11
-FetchContent_Declare(
-    pybind11
-    GIT_REPOSITORY https://github.com/pybind/pybind11.git
-    GIT_TAG v2.12.1
-)
-FetchContent_MakeAvailable(pybind11)
-
 pybind11_add_module(orderbook_wrapper bindings/pybind.bindings.cpp)
 
 target_link_libraries(orderbook_wrapper PRIVATE OrderBookLib)
+target_link_libraries(orderbook_wrapper PRIVATE pybind11::tools)
 
-# Tell CMake to download version 1.14.0 of GoogleTest
-FetchContent_Declare(
-    googletest
-    GIT_REPOSITORY https://github.com/google/googletest.git
-    GIT_TAG v1.14.0
-)
-
-# On Windows, this prevents overriding parent project's compiler/linker settings
-set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
-
-# Now download and make GoogleTest available for CMake
-FetchContent_MakeAvailable(googletest)
+find_package(GTest REQUIRED)
 
 # Enable testing
 enable_testing()
