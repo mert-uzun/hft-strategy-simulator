@@ -437,7 +437,7 @@ PYBIND11_MODULE(orderbook_wrapper, m) {
     //   - Calls strategy.on_market_update() each tick
     
     py::class_<MarketEngine>(m, "MarketEngine")
-        .def(py::init<int, long long, long long, long long, long long, long long, long long, double, double>(),
+        .def(py::init<int, long long, long long, long long, long long, long long, long long, double, double, double>(),
             py::arg("strategy_quote_size") = 1,
             py::arg("strategy_tick_offset") = 1,
             py::arg("strategy_max_inv") = 10,
@@ -446,6 +446,7 @@ PYBIND11_MODULE(orderbook_wrapper, m) {
             py::arg("starting_mid_price") = 10000,
             py::arg("start_spread") = 2,
             py::arg("start_vol") = 1.0,
+            py::arg("min_volatility") = 0.5,
             py::arg("start_fill_prob") = 0.3,
             "Create market engine with strategy and market parameters")
         
@@ -500,7 +501,7 @@ PYBIND11_MODULE(orderbook_wrapper, m) {
     //   print(f"Sharpe: {metrics.get_sharpe_ratio()}")
     
     py::class_<SimulationEngine>(m, "SimulationEngine")
-        .def(py::init<long long, long long, long long, int, long long, long long, long long, long long, long long, long long, double, double>(),
+        .def(py::init<long long, long long, long long, int, long long, long long, long long, long long, long long, long long, double, double, double>(),
             py::arg("starting_timestamp_us"),
             py::arg("ending_timestamp_us"),
             py::arg("step_us"),
@@ -512,6 +513,7 @@ PYBIND11_MODULE(orderbook_wrapper, m) {
             py::arg("starting_mid_price") = 10000,
             py::arg("start_spread") = 2,
             py::arg("start_vol") = 1.0,
+            py::arg("min_volatility") = 0.5,
             py::arg("start_fill_prob") = 0.3,
             "Create simulation engine with full configuration")
         
