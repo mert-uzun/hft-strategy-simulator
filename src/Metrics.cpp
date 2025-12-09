@@ -152,9 +152,11 @@ void Metrics::on_fill(long long order_id_1, long long fill_price_per_share_ticks
     if (!was_instant) {
         resting_filled_qty += filled_quantity;
         fees_ticks -= config.maker_rebate_per_share_ticks * filled_quantity;
+        realized_pnl_ticks += config.maker_rebate_per_share_ticks * filled_quantity;
     }
     else {
         fees_ticks += config.taker_fee_per_share_ticks * filled_quantity;
+        realized_pnl_ticks -= config.taker_fee_per_share_ticks * filled_quantity;
     }
 
     Side side = iter_order_1->second.side;
