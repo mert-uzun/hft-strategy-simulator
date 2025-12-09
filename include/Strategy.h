@@ -2,13 +2,10 @@
 
 #include "LatencyQueue.h"
 #include "Metrics.h"
-#include "Order.h"
 #include "OrderBook.h"
 #include <functional>
 #include <queue>
-#include <string>
 #include <map>
-#include <tuple>
 #include <utility>
 #include <vector>
 
@@ -16,6 +13,14 @@
     Ping pong strategy is implemented
 */
 class Strategy {
+    public:
+        // State enum must be public for Python bindings and declared before use
+        enum class State {
+            WAITING_TO_BUY,
+            WAITING_TO_SELL,
+            BALANCED
+        };
+
     private:
         Metrics& metrics;
         OrderBook& order_book;
@@ -42,12 +47,8 @@ class Strategy {
         long long last_pinged_market_price_ticks;
         long long last_quote_time_us;
 
-        enum class State {
-            WAITING_TO_BUY,
-            WAITING_TO_SELL,
-            BALANCED
-        };
         State state;
+
     public:
         Strategy(Metrics& metrics, OrderBook& orderbook, int quote_size, long long tick_offset, long long max_inv, long long cancel_threshold, long long cooldown_between_requotes);
         ~Strategy();

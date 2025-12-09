@@ -1,7 +1,6 @@
 #pragma once
 
 #include "MarketEngine.h"
-#include "Strategy.h"
 
 class SimulationEngine {
     private:
@@ -22,4 +21,5 @@ class SimulationEngine {
         long long get_current_timestamp_us() { return current_timestamp_us; }
         long long get_ending_timestamp_us() { return ending_timestamp_us; }
         long long get_step_us() {return step_us; }
+        MarketEngine& get_market_engine() { return market_engine; }
 };
