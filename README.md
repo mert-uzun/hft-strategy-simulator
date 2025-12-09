@@ -38,6 +38,45 @@ This project implements a **production-grade HFT simulation framework** designed
 <tr>
 <td width="50%">
 
+### 🏛️ Core Engine (C++)
+- **Price-Time Priority Matching** — FIFO order matching at each price level
+- **Limit & IOC Orders** — Support for resting and immediate-or-cancel orders
+- **O(log N) Operations** — Red-black tree price levels, hash-map order lookup
+- **Trade Logging** — Full audit trail of all executions
+
+</td>
+<td width="50%">
+
+### 📊 Market Simulation
+- **Random Walk + Jumps** — Realistic price dynamics with rare tail events
+- **Dynamic Volatility** — EWMA volatility that responds to price moves
+- **Adaptive Spreads** — Spread widens with volatility
+- **Stochastic Fills** — Distance-based fill probability model
+
+</td>
+</tr>
+<tr>
+<td>
+
+### ⏱️ Latency Modeling
+- **Per-Action Latency** — Different delays for orders, cancels, acks
+- **Configurable Profiles** — Tune min/max bounds per action type
+- **Priority Queue Execution** — Events processed in timestamp order
+- **Realistic Scenarios** — Model co-location vs. retail latency
+
+</td>
+<td>
+
+### 📈 Analytics
+- **Real-Time PnL Tracking** — Realized, unrealized, and total PnL
+- **Risk Metrics** — Sharpe ratio, max drawdown, volatility
+- **Execution Quality** — Fill ratio, slippage analysis
+- **Time Series Export** — Full price/PnL history for visualization
+
+</td>
+</tr>
+</table>
+
 ---
 
 ## 🏗️ Architecture
