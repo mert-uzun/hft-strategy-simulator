@@ -67,7 +67,7 @@ def run_simulation(
               f"cooldown_us={strat['cooldown_us']}")
         print(f"Market: duration={conf['ending_timestamp_us'] - conf['starting_timestamp_us']}us, "
               f"step={conf['step_us']}us, mid_price={conf['starting_mid_price']}, "
-              f"spread={conf['start_spread']}, vol={conf['start_vol']}, fill_prob={conf['start_fill_prob']}")
+              f"spread={conf['start_spread']}, vol={conf['start_vol']}, min_vol={conf['min_volatility']}, fill_prob={conf['start_fill_prob']}")
 
     # Create and run simulation
     engine = sim.SimulationEngine(
@@ -82,6 +82,7 @@ def run_simulation(
         starting_mid_price=conf["starting_mid_price"],
         start_spread=conf["start_spread"],
         start_vol=conf["start_vol"],
+        min_volatility=conf["min_volatility"],
         start_fill_prob=conf["start_fill_prob"],
     )
 
@@ -248,6 +249,7 @@ Examples:
     sim_group.add_argument("--mid-price", type=int, default=10000, help="Starting mid price (ticks)")
     sim_group.add_argument("--spread", type=int, default=2, help="Starting spread (ticks)")
     sim_group.add_argument("--volatility", type=float, default=1.0, help="Market volatility")
+    sim_group.add_argument("--min-volatility", type=float, default=0.5, help="Minimum volatility floor")
     sim_group.add_argument("--fill-prob", type=float, default=0.3, help="Base fill probability")
 
     # Output
@@ -273,6 +275,7 @@ def main() -> None:
         "starting_mid_price": args.mid_price,
         "start_spread": args.spread,
         "start_vol": args.volatility,
+        "min_volatility": args.min_volatility,
         "start_fill_prob": args.fill_prob,
     }
 

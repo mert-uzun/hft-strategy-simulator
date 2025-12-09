@@ -149,6 +149,7 @@ DEFAULT_SIM_CONFIG = {
     "starting_mid_price": 10000,
     "start_spread": 2,
     "start_vol": 1.0,
+    "min_volatility": 0.5,
     "start_fill_prob": 0.3,
 }
 
@@ -160,6 +161,7 @@ def create_sim_config(
     starting_mid_price: int = 10000,
     start_spread: int = 2,
     start_vol: float = 1.0,
+    min_volatility: float = 0.5,
     start_fill_prob: float = 0.3,
 ) -> Dict[str, Any]:
     """
@@ -184,5 +186,6 @@ def create_sim_config(
         "starting_mid_price": starting_mid_price,
         "start_spread": start_spread,
         "start_vol": start_vol,
+        "min_volatility": min_volatility,
         "start_fill_prob": start_fill_prob,
     }
