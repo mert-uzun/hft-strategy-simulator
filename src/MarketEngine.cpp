@@ -43,8 +43,21 @@ void MarketEngine::simulate_background_dynamics() {
 
     long long price_change = market_price_ticks - prev_price_ticks;
 
-    spread = std::max<long long>(1, (long long)(2 + 0.5 * volatility)); 
-
+    // Stochastic spread dynamics: delta_spread based on volatility
+    // Coin flip determines if spread widens or narrows
+    std::uniform_int_distribution<int> coin(0, 1);
+    double delta_spread = std::max(1.0, 0.5 * volatility + 0.3 * std::abs(price_change));
+    
+    if (coin(rand_engine) == 0) {
+        spread = std::max<long long>(1, spread - (long long)delta_spread);  // Narrow
+    } else {
+        spread = spread + (long long)delta_spread;  // Widen
+    }
+    
+    // Bound spread to reasonable range [1, 10 + volatility]
+    long long max_spread = (long long)(10 + 2 * volatility);
+    spread = std::clamp(spread, 1LL, max_spread);
+    
     volatility = std::sqrt((0.1 * price_change * price_change) + 0.9 * (volatility * volatility));
     
     // Minimum volatility floor to prevent market from freezing
