@@ -45,6 +45,14 @@
 
 # Clangd settings
 .clangd
+.cache/
+
+# CMake generated
+compile_commands.json
+
+# Python
+__pycache__/
+*.pyc
 
 # Build directory with all its contents
 build/

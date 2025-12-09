@@ -33,7 +33,6 @@ target_include_directories(OrderBookLib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/inclu
 pybind11_add_module(orderbook_wrapper bindings/pybind.bindings.cpp)
 
 target_link_libraries(orderbook_wrapper PRIVATE OrderBookLib)
-target_link_libraries(orderbook_wrapper PRIVATE pybind11::tools)
 
 find_package(GTest REQUIRED)
 
