@@ -201,7 +201,7 @@ void Metrics::on_fill(long long order_id_1, long long fill_price_per_share_ticks
         order_cache.erase(order_id_1);
     }
     else if (iter_order_1->second.remaining_qty < 0) {
-        throw std::runtime_error("There is an error in the mechanism of matching trades, quantities shouldn't go below 0");
+        std::cout << "Another action happened between you sending the order and fill actually happening in the market. REMEMBER this is a realistic simulation, latencies exist!" << std::endl;
     }
 
     take_screenshot(fill_timestamp_us, false);
