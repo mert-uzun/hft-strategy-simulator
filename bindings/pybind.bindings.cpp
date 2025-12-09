@@ -156,4 +156,73 @@ PYBIND11_MODULE(orderbook_wrapper, m) {
         .def("get_gross_loss", &Metrics::get_gross_loss)
         .def("get_profit_factor", &Metrics::get_profit_factor)
         .def("get_win_rate", &Metrics::get_win_rate);
+
+    // ----------------------------------------------------------------
+    // 5. OrderBook
+    // ----------------------------------------------------------------
+    py::class_<OrderBook>(m, "OrderBook")
+        // ═══════════════════════════════════════════════════════════════
+        // CONSTRUCTOR
+        // ═══════════════════════════════════════════════════════════════
+        .def(py::init<Metrics&>(), py::arg("metrics"))
+
+        // ═══════════════════════════════════════════════════════════════
+        // GETTER METHODS (return references - Python CAN modify!)
+        // ═══════════════════════════════════════════════════════════════
+        // Using .def() instead of .def_property_readonly() to make it explicit
+        // that these are methods returning mutable references.
+        // 
+        // In Python: order_book.get_buys()[price_level].append(order)
+        //
+        // return_value_policy::reference_internal means:
+        //   - Return a reference (not a copy)
+        //   - Keep the parent (OrderBook) alive while reference exists
+        .def("get_buys", &OrderBook::get_buys, 
+            py::return_value_policy::reference_internal)
+        .def("get_sells", &OrderBook::get_sells, 
+            py::return_value_policy::reference_internal)
+        .def("get_order_lookup", &OrderBook::get_order_lookup, 
+            py::return_value_policy::reference_internal)
+        .def("get_trade_log", &OrderBook::get_trade_log, 
+            py::return_value_policy::reference_internal)
+
+        // ═══════════════════════════════════════════════════════════════
+        // REGULAR METHODS
+        // ═══════════════════════════════════════════════════════════════
+        .def("add_limit_order", &OrderBook::add_limit_order,
+            py::arg("is_buy"), py::arg("price_tick"), 
+            py::arg("quantity"), py::arg("timestamp"))
+        .def("add_ioc_order", &OrderBook::add_IOC_order,
+            py::arg("is_buy"), py::arg("quantity"), py::arg("timestamp"))
+        .def("cancel_order", &OrderBook::cancel_order, py::arg("order_id"))
+        .def("modify_order", &OrderBook::modify_order,
+            py::arg("order_id"), py::arg("new_quantity"), py::arg("timestamp"))
+        .def("snapshot", &OrderBook::snapshot)
+
+        // ═══════════════════════════════════════════════════════════════
+        // ITERATOR METHODS - Cannot expose C++ iterators to Python!
+        // ═══════════════════════════════════════════════════════════════
+        // C++ iterators (std::map::iterator, reverse_iterator) have no 
+        // Python equivalent. We MUST wrap them to return Python-friendly data.
+        //
+        // Options for get_best_bid() which returns reverse_iterator:
+        //   1. Return just the price (long long) - simplest
+        //   2. Return a tuple (price, orders_list) - more complete
+        //   3. Return the full price level as a dict - most Pythonic
+        //
+        // Here we return a py::tuple of (price, list<Order>&) or None if empty
+        .def("get_best_bid", [](OrderBook& self) -> py::object {
+            auto& buys = self.get_buys();
+            if (buys.empty()) return py::none();
+            auto it = buys.rbegin();  // Best bid = highest price = last in sorted map
+            return py::make_tuple(it->first, py::cast(it->second, 
+                py::return_value_policy::reference_internal));
+        })
+        .def("get_best_ask", [](OrderBook& self) -> py::object {
+            auto& sells = self.get_sells();
+            if (sells.empty()) return py::none();
+            auto it = sells.begin();  // Best ask = lowest price = first in sorted map
+            return py::make_tuple(it->first, py::cast(it->second, 
+                py::return_value_policy::reference_internal));
+        });
 }
