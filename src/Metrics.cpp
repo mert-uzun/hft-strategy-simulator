@@ -8,7 +8,7 @@
 const int Metrics::TRADING_DAYS_PER_YEAR = 252;
 const double Metrics::HOURS_PER_DAY = 6.5;
 
-Metrics::Metrics() : config(0, 0, 0, 0, MarkingMethod::MID), timestamp_series(), total_pnl_ticks_series(), 
+Metrics::Metrics() : config(0.1, 5, 5, 1000, MarkingMethod::MID), timestamp_series(), total_pnl_ticks_series(), 
                         last_return_bucket_start_us(0), last_return_bucket_total_pnl_ticks(0), realized_pnl_ticks_series(), unrealized_pnl_ticks_series(), spread_ticks_series(), market_price_ticks_series(), returns_series(), order_cache() {
     reset();
 }

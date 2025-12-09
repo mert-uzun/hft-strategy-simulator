@@ -7,7 +7,11 @@ long long MarketEngine::env_order_id = 1000000;
 const double MarketEngine::tick_size = 0.001;
     
 MarketEngine::MarketEngine(int strategy_quote_size, long long strategy_tick_offset, long long strategy_max_inv, long long strategy_cancel_threshold, long long strategy_cooldown_between_requotes, long long starting_mid_price, long long start_spread, double start_vol, double start_fill_prob) : metrics(), orderbook(metrics), 
-                            strategy(metrics, orderbook, strategy_quote_size, strategy_tick_offset, strategy_max_inv, strategy_cancel_threshold, strategy_cooldown_between_requotes), rng(), rand_engine(rng()), market_price_ticks(starting_mid_price), spread(start_spread), volatility(start_vol), fill_probability(start_fill_prob) {}
+                            strategy(metrics, orderbook, strategy_quote_size, strategy_tick_offset, strategy_max_inv, strategy_cancel_threshold, strategy_cooldown_between_requotes), rng(), rand_engine(rng()), market_price_ticks(starting_mid_price), spread(start_spread), volatility(start_vol), fill_probability(start_fill_prob) {
+    // Set default metrics config - return_bucket_interval of 1ms (1000 us) is a reasonable default for HFT
+    metrics.set_config(tick_size, 2, 3, Metrics::MarkingMethod::MID, 1000);
+}
+
 
 void MarketEngine::update(long long timestamp_us) {
     simulate_background_dynamics();
