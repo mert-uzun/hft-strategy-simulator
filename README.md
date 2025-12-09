@@ -41,7 +41,7 @@ This project implements a **production-grade HFT simulation framework** designed
 ### 🏛️ Core Engine (C++)
 - **Price-Time Priority Matching** — FIFO order matching at each price level
 - **Limit & IOC Orders** — Support for resting and immediate-or-cancel orders
-- **O(log N) Operations** — Red-black tree price levels, hash-map order lookup
+- **O(1) & O(log N) Operations** — Red-black tree price levels, hash-map order lookup
 - **Trade Logging** — Full audit trail of all executions
 
 </td>
