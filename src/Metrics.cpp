@@ -3,7 +3,6 @@
 #include <cmath>
 #include <cstdlib>
 #include <iostream>
-#include <stdexcept>
 
 const int Metrics::TRADING_DAYS_PER_YEAR = 252;
 const double Metrics::HOURS_PER_DAY = 6.5;
