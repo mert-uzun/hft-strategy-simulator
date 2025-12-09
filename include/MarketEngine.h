@@ -2,10 +2,8 @@
 
 #include "OrderBook.h"
 #include "Metrics.h"
-#include "Trade.h"
 #include "Strategy.h"
 #include <sys/stat.h>
-#include <vector>
 
 class MarketEngine {
     private:

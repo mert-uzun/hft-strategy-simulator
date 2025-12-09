@@ -1,4 +1,5 @@
 #include "../include/MarketEngine.h"
+#include "../include/Trade.h"
 #include <algorithm>
 #include <cmath>
 #include <random>
