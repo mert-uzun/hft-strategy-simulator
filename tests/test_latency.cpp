@@ -1,7 +1,6 @@
 #include <gtest/gtest.h>
 #include <iostream>
 #include <list>
-#include <stack>
 #include "../include/LatencyQueue.h"
 
 /**

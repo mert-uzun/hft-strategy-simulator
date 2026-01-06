@@ -1,7 +1,7 @@
 #include <gtest/gtest.h>
 #include "../include/Strategy.h"
-#include "LatencyQueue.h"
-#include "OrderBook.h"
+#include "../include/LatencyQueue.h"
+#include "../include/OrderBook.h"
 
 // Below are the default values of strategy parameters for this test suite
 // quote_size = 100,
