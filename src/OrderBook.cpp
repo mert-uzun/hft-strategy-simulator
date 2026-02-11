@@ -123,7 +123,6 @@ long long OrderBook::add_IOC_order(bool isBuy, int quantity, long long timestamp
 int OrderBook::cancel_order(long long orderId) {
     auto iter_lookup = order_lookup.find(orderId); // .find(key) returns a temp iterator to the corresponding <key, value> std::pair
     if (iter_lookup == order_lookup.end()){
-        std::cout << "This order doesn't exist.";
         return 1;
     }
 
