@@ -202,7 +202,7 @@ def compare_strategies(results: Dict[str, sim.Metrics]) -> None:
 def parse_args() -> argparse.Namespace:
     """Parse command-line arguments."""
     parser = argparse.ArgumentParser(
-        description="HFT Ping-Pong Strategy Simulator",
+        description="HFT/Quant Strategy Simulator \n\nCurrent Strategy: Ping-Pong",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Examples:
